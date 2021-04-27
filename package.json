@@ -1,0 +1,29 @@
+{
+  "name": "petits-streamers",
+  "version": "1.0.0",
+  "description": "petits-streamers",
+  "main": "index.js",
+  "scripts": {
+    "test": "ts-node ./server/main.ts --esModuleInterop",
+    "tsc": "tsc"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Hedgestock/petits-streamers.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Hedgestock/petits-streamers/issues"
+  },
+  "homepage": "https://github.com/Hedgestock/petits-streamers#readme",
+  "dependencies": {
+    "@types/express": "^4.17.11",
+    "@types/node-fetch": "^2.5.10",
+    "express": "^4.17.1",
+    "node-fetch": "^2.6.1",
+    "ts-node": "^9.1.1",
+    "tsc": "^1.20150623.0",
+    "typescript": "^4.2.4"
+  }
+}

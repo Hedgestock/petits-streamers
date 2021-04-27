@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Petits Streamers</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <style>
+      body {
+        font-family: "Roboto", sans-serif;
+        font-weight: bold;
+        background-color: dimgray;
+        color: white;
+        padding: 0;
+        margin: 0;
+        display: flex;
+        flex-flow: column;
+        min-height: 100vh;
+      }
+
+      #topbar {
+        background-color: darkgray;
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        box-shadow: 0px 0px 5px black;
+        padding: 5px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      a:hover {
+        opacity: 0.7;
+      }
+
+      #topbar a {
+        font-size: 30px;
+        font-weight: bolder;
+        text-decoration: none;
+        padding: 0 10px;
+      }
+
+      .logo {
+        width: auto;
+        height: 50px;
+      }
+
+      #footer {
+        background-color: darkgray;
+        color: dimgray;
+        margin-top: auto;
+        display: flex;
+        justify-content: space-between;
+        box-shadow: 0px 0px 5px black;
+        padding: 5px;
+      }
+
+      #footer a {
+        color: dimgray;
+        text-decoration: none;
+        padding: 0 5px;
+      }
+
+      #footer a + a {
+        border-left: 1px solid dimgray;
+      }
+
+      #footer a:hover {
+        color: black;
+      }
+
+      #container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        padding: 5px;
+      }
+
+      .mini {
+        display: flex;
+        flex-grow: 1;
+        position: relative;
+        margin: 5px;
+        text-decoration: none;
+        color: inherit;
+        background-color: black;
+        box-shadow: 5px 3px black;
+        max-width: 768px;
+        max-height: 432px;
+      }
+
+      .text {
+        background-color: rgba(0, 0, 0, 0.5);
+        margin: 5px;
+        padding: 5px;
+        border-radius: 5px;
+      }
+
+      .title {
+        position: absolute;
+        top: 0;
+      }
+
+      .streamer {
+        position: absolute;
+        bottom: 0;
+      }
+
+      .viewer-count {
+        color: red;
+        position: absolute;
+        bottom: 0;
+        right: 0;
+      }
+
+      .thumbnail {
+        height: auto;
+        flex-grow: 1;
+      }
+    </style>
+    <script>
+      fetch("/api/streams")
+        .then((res) => res.json())
+        .then((json) => {
+          console.log(json);
+          json.data.forEach((stream) => {
+            let mini = document.createElement("a");
+            // mini.target = "_blank"
+            mini.href = `https://twitch.tv/${stream.user_login}`;
+            mini.classList.add("mini");
+
+            // let height = 324;
+            // let width = 576;
+            let height = 216;
+            let width = 384;
+            // let height = 108;
+            // let width = 192;
+
+            let thumbnail = document.createElement("img");
+            console.log(stream.thumbnail_url);
+            thumbnail.src = stream.thumbnail_url
+              .replace("{height}", height * 2)
+              .replace("{width}", width * 2);
+            console.log(thumbnail.src);
+            thumbnail.height = height;
+            thumbnail.width = width;
+            thumbnail.classList.add("thumbnail");
+            mini.appendChild(thumbnail);
+
+            let title = document.createElement("div");
+            title.innerText = stream.title;
+            title.classList.add("title");
+            title.classList.add("text");
+            mini.appendChild(title);
+
+            let streamer = document.createElement("div");
+            streamer.innerText = stream.user_name;
+            streamer.classList.add("streamer");
+            streamer.classList.add("text");
+            mini.appendChild(streamer);
+
+            let viewerCount = document.createElement("div");
+            viewerCount.innerText = stream.viewer_count;
+            viewerCount.classList.add("viewer-count");
+            viewerCount.classList.add("text");
+            mini.appendChild(viewerCount);
+
+            document.getElementById("container").appendChild(mini);
+          });
+        });
+    </script>
+    <div id="topbar">
+      <a href="https://discord.gg/rQT6XMhra3" target="_blank">
+        <img class="logo" src="/logo.png" />
+      </a>
+      <div>
+        <a href="https://discord.gg/rQT6XMhra3" target="_blank">Discord</a>
+        <a href="https://twitter.com/PetitsStreams" target="_blank">Twitter</a>
+      </div>
+    </div>
+    <div id="container"></div>
+    <div id="footer">
+      Made by Hedgestock
+      <div>
+        <a href="https://www.twitch.tv/hedgestock">Twitch</a>
+        <a href="https://github.com/Hedgestock">Github</a>
+      </div>
+    </div>
+  </body>
+</html>
